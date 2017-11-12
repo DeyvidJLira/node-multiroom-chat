@@ -1,0 +1,19 @@
+{
+  "name": "multiroom-chat",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DeyvidJLira/node-multiroom-chat.git"
+  },
+  "author": "Deyvid Lira",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/DeyvidJLira/node-multiroom-chat/issues"
+  },
+  "homepage": "https://github.com/DeyvidJLira/node-multiroom-chat#readme"
+}
