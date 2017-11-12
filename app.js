@@ -18,4 +18,16 @@ io.on('connection', function(socket) {
     socket.on('disconnect', function() {
         console.log("User disconnected");
     });
+
+    socket.on('sendMessageServer', function(data) {
+        socket.emit(
+            'sendMessageClient',
+            {nick: data.nick, message: data.message}
+        );
+
+        socket.broadcast.emit(
+            'sendMessageClient',
+            {nick: data.nick, message: data.message}
+        );
+    });
 });

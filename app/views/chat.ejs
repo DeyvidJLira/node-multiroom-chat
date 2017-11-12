@@ -104,16 +104,15 @@
 		<nav class="navbar navbar-default navbar-fixed-bottom" role="navigation">
 			<div class="container">
 				<div class="panel-body campo-mensagem">
-					<form>
-						<div class="col-md-12">
-							<div class="input-group">
-								<input type="text" class="form-control" placeholder="Mensagem">
-								<span class="input-group-btn">
-									<button class="btn btn-default" type="button">></button>
-								</span>
-							</div>
+					<div class="col-md-12">
+						<div class="input-group">
+							<input type="text" class="form-control" placeholder="Mensagem" id="message_field" />
+							<input type="hidden" value="<%= dataForm.nick %>" id="nick">
+							<span class="input-group-btn">
+								<button class="btn btn-default" type="button" id="send_message">></button>
+							</span>
 						</div>
-					</form>
+					</div>
 				</div>
 			</div>
 		</nav>		
@@ -123,20 +122,27 @@
 		<script src="/socket.io/socket.io.js"></script>
 
 		<script>
-			function Message(apelido, message) {
-				this.apelido = apelido;
+			function Message(nick, message) {
+				this.nick = nick;
 				this.message = message;
 
 				this.getHTML = function() {
-					var html = '<div class="dialogo"><h4>' + this.apelido + '</h4><p>' + this.message + '</p></div>';
+					var html = '<div class="dialogo"><h4>' + this.nick + '</h4><p>' + this.message + '</p></div>';
 					return html;
 				}
 			}
 
 			var socket = io('http://localhost');
 
-			socket.on('newMessage', function(data) {
-				var message = new Message(data.apelido, data.message);
+			$('#send_message').click(function() {
+				socket.emit(
+					'sendMessageServer',
+					{nick: $('#nick').val(), message: $('#message_field').val() }
+				);
+			});
+
+			socket.on('sendMessageClient', function(data) {
+				var message = new Message(data.nick, data.message);
 
 				$('#dialogs').append(message.getHTML());
 			});
