@@ -15,5 +15,12 @@
   "bugs": {
     "url": "https://github.com/DeyvidJLira/node-multiroom-chat/issues"
   },
-  "homepage": "https://github.com/DeyvidJLira/node-multiroom-chat#readme"
+  "homepage": "https://github.com/DeyvidJLira/node-multiroom-chat#readme",
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "consign": "^0.1.6",
+    "ejs": "^2.5.7",
+    "express": "^4.16.2",
+    "express-validator": "^4.3.0"
+  }
 }
