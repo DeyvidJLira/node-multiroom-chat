@@ -20,6 +20,7 @@ io.on('connection', function(socket) {
     });
 
     socket.on('sendMessageServer', function(data) {
+        //Message
         socket.emit(
             'sendMessageClient',
             {nick: data.nick, message: data.message}
@@ -29,5 +30,19 @@ io.on('connection', function(socket) {
             'sendMessageClient',
             {nick: data.nick, message: data.message}
         );
+
+    });
+
+    socket.on('sendUserServer', function(data) {
+        //Users
+        socket.emit(
+            'sendUserClient',
+            {nick: data.nick}
+        );
+
+        socket.broadcast.emit(
+            'sendUserClient',
+            {nick: data.nick}
+        );  
     });
 });

@@ -80,21 +80,8 @@
 			
 			<div class="row participantes" id="participantes" style="display:none">
 				<div class="col-md-1"></div>
-				<div class="col-md-10">
-					<span class="participante">
-						<img src="img/ico_usuario.png" />
-						Jorge
-					</span>
+				<div class="col-md-10" id="users">
 					
-					<span class="participante">
-						<img src="img/ico_usuario.png" />
-						José
-					</span>
-					
-					<span class="participante">
-						<img src="img/ico_usuario.png" />
-						Fernando
-					</span>
 				</div>
 				<div class="col-md-1"></div>
                 
@@ -107,7 +94,8 @@
 					<div class="col-md-12">
 						<div class="input-group">
 							<input type="text" class="form-control" placeholder="Mensagem" id="message_field" />
-							<input type="hidden" value="<%= dataForm.nick %>" id="nick">
+							<input type="hidden" value="<%= dataForm.nick %>" id="nick"/>
+							<input type="hidden" value="0" id="nick_updated"/>
 							<span class="input-group-btn">
 								<button class="btn btn-default" type="button" id="send_message">></button>
 							</span>
@@ -139,13 +127,36 @@
 					'sendMessageServer',
 					{nick: $('#nick').val(), message: $('#message_field').val() }
 				);
+				$('#message_field').val("");
 			});
 
 			socket.on('sendMessageClient', function(data) {
 				var message = new Message(data.nick, data.message);
 
 				$('#dialogs').append(message.getHTML());
+
+				window.scrollTo(0, document.body.scrollHeight);
 			});
+
+			function User(nick) {
+				this.nick = nick;
+
+				this.getHTML = function() {
+					var html = '<span class="participante"><img src="img/ico_usuario.png">' + this.nick + '</span>';
+					return html;
+				}
+			}
+
+			socket.on('sendUserClient', function(data) {
+				var user = new User(data.nick);
+
+				$('#users').append(user.getHTML());
+			});
+
+			socket.emit(
+				'sendUserServer',
+				{nick: $('#nick').val()}
+			);
 		</script>
 
 	</body>

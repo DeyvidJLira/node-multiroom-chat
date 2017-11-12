@@ -15,6 +15,6 @@ module.exports.init = function(application, request, response) {
         'sendMessageClient',
         {nick : dataForm.nick, message : ' entrou no chat'}
     );
-
+    
     response.render('chat', {dataForm});
 }
