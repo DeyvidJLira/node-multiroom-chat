@@ -2,6 +2,8 @@
 var app = require('./config/server');
 
 //Define port
-app.listen(80, function() {
+var server = app.listen(80, function() {
     console.log("Server ON");
 });
+
+require('socket.io').listen(server);
