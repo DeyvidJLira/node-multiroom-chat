@@ -11,5 +11,9 @@ module.exports.init = function(application, request, response) {
         return;
     }
 
+    application.get('io').emit(
+        'newMessage',
+        {apelido : dataForm.apelido, message : ' entrou no chat'});
+
     response.render('chat');
 }

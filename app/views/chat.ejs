@@ -71,31 +71,8 @@
 		<div class="container">
             <div class="row conversa" id="conversa">
 				<div class="col-md-1"></div>
-				<div class="col-md-10">
-					<div class="dialogo">
-						<h4>Jorge</h4>
-						<p>Fala José, blz cara?</p>
-					</div>
+				<div class="col-md-10" id="dialogs">
 					
-					<div class="dialogo">
-						<h4>José</h4>
-						<p>Opa, tudo certo!</p>
-					</div>
-					
-					<div class="dialogo">
-						<h4>Jorge</h4>
-						<p>Vai estudar mais sobre NodeJS hoje?</p>
-					</div>
-					
-					<div class="dialogo">
-						<h4>José</h4>
-						<p>Sim, com certeza. Vamos trabalhar com Websockets hoje, o assunto é bem interessante</p>
-					</div>
-					
-					<div class="dialogo">
-						<h4>Jorge</h4>
-						<p>Show de bola, comunicação bi-direcional em páginas ou sistemas web é muito bacana mesmo</p>
-					</div>
 				</div>
 				<div class="col-md-1"></div>
                 
@@ -146,7 +123,23 @@
 		<script src="/socket.io/socket.io.js"></script>
 
 		<script>
+			function Message(apelido, message) {
+				this.apelido = apelido;
+				this.message = message;
+
+				this.getHTML = function() {
+					var html = '<div class="dialogo"><h4>' + this.apelido + '</h4><p>' + this.message + '</p></div>';
+					return html;
+				}
+			}
+
 			var socket = io('http://localhost');
+
+			socket.on('newMessage', function(data) {
+				var message = new Message(data.apelido, data.message);
+
+				$('#dialogs').append(message.getHTML());
+			});
 		</script>
 
 	</body>

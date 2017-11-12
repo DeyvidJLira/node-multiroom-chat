@@ -8,6 +8,9 @@ var server = app.listen(80, function() {
 
 var io = require('socket.io').listen(server);
 
+//Create global variable
+app.set('io', io);
+
 //Create a connection by websocket
 io.on('connection', function(socket) {
     console.log("User connected");
